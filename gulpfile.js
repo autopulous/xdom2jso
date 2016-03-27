@@ -9,7 +9,7 @@ gulp.task('delete-node-modules', function () {
 });
 
 gulp.task('clean', function () {
-    var patterns = ['app/', 'tst/', 'map/', './*.log', 'distro/'];
+    var patterns = ['app/', 'map/', './*.log', 'distro/'];
     console.log('deleting: ' + patterns);
     return del(patterns);
 });
