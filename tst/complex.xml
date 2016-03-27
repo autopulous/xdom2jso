@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<envelope>
+    <xml>
+        <messageList>
+            Verizon Feed
+            <message viewed="true" urgent="false" content="UTF-32">
+                <id>1</id>
+                <content language="en">local text</content>
+                <sentAt format="UTC">Thu Mar 24 00:13:40 +0005 2016</sentAt>
+                <billing international="false">
+                    <metrics characterCount="10" byteCount="345" networkHops="2" rebroadcastCount="0"/>
+                    <sourceNetwork roaming="true">Verizon</sourceNetwork>
+                    <taxRouting>
+                        <jurisdiction id="00000001">USA</jurisdiction>
+                        <jurisdiction id="21000001">New York</jurisdiction>
+                        <jurisdiction id="21001001">New York</jurisdiction>
+                    </taxRouting>
+                </billing>
+            </message>
+            <message viewed="true" urgent="false" content="UTF-32">
+                <id>2</id>
+                <content language="en">regional text</content>
+                <sentAt format="UTC">Thu Mar 24 00:14:22 +0005 2016</sentAt>
+                <billing international="false">
+                    <metrics characterCount="13" byteCount="377" networkHops="2" rebroadcastCount="1"/>
+                    <sourceNetwork roaming="true">Verizon</sourceNetwork>
+                    <taxRouting>
+                        <jurisdiction id="00000001">USA</jurisdiction>
+                        <jurisdiction id="37000001">Vermont</jurisdiction>
+                        <jurisdiction id="37001161">Springfield</jurisdiction>
+                        <jurisdiction id="00000001">USA</jurisdiction>
+                        <jurisdiction id="21000001">New York</jurisdiction>
+                        <jurisdiction id="21001001">New York</jurisdiction>
+                    </taxRouting>
+                </billing>
+            </message>
+            <message viewed="false" urgent="true" content="UTF-32">
+                <id>3</id>
+                <content language="fr">texte international</content>
+                <sentAt format="UTC">Thu Mar 24 00:21:57 +0005 2016</sentAt>
+                <billing international="true">
+                    <metrics characterCount="19" byteCount="401" networkHops="9" rebroadcastCount="7"/>
+                    <sourceNetwork roaming="true">Verizon</sourceNetwork>
+                    <taxRouting>
+                        <jurisdiction id="00000002">Canada</jurisdiction>
+                        <jurisdiction id="04000002">Ontario</jurisdiction>
+                        <jurisdiction id="04001002">Toronto</jurisdiction>
+                        <jurisdiction id="00000001">USA</jurisdiction>
+                        <jurisdiction id="21000001">New York</jurisdiction>
+                        <jurisdiction id="21001001">New York</jurisdiction>
+                    </taxRouting>
+                </billing>
+            </message>
+        </messageList>
+    </xml>
+    <json>
+        "messageList": {
+            "$": "Verizon Feed",
+            "message": [
+                {
+                    "_": {"viewed": "true", "urgent": "false", "content": "UTF-32"},
+                    "id": {
+                        "$": "1"
+                    },
+                    "content": {
+                        "_": {"language": "en"},
+                        "$": "local text"
+                    },
+                    "sentAt": {
+                        "_": {"format": "UTC"},
+                        "$": "Thu Mar 24 00:13:40 +0005 2016"
+                    },
+                    "billing": {
+                        "_": {"international": "false"},
+                        "metrics": {
+                            "_": {"characterCount": "10", "byteCount": "345", "networkHops": "2", "rebroadcastCount": "0"}
+                        },
+                        "sourceNetwork": {
+                            "_": {"roaming": "true"},
+                            "$": "Verizon"
+                        },
+                        "taxRouting": {
+                            "jurisdiction": [
+                                {
+                                    "_": {"id": "00000001"},
+                                    "$": "USA"
+                                },
+                                {
+                                    "_": {"id": "21000001"},
+                                    "$": "New York"
+                                },
+                                {
+                                    "_": {"id": "21001001"},
+                                    "$": "New York"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "_": {"viewed": "true", "urgent": "false", "content": "UTF-32"},
+                    "id": {
+                        "$": "2"
+                    },
+                    "content": {
+                        "_": {"language": "en"},
+                        "$": "regional text"
+                    },
+                    "sentAt": {
+                        "_": {"format": "UTC"},
+                        "$": "Thu Mar 24 00:14:22 +0005 2016"
+                    },
+                    "billing": {
+                        "_": {"international": "false"},
+                        "metrics": {
+                            "_": {"characterCount": "13", "byteCount": "377", "networkHops": "2", "rebroadcastCount": "1"}
+                        },
+                        "sourceNetwork": {
+                            "_": {"roaming": "true"},
+                            "$": "Verizon"
+                        },
+                        "taxRouting": {
+                            "jurisdiction": [
+                                {
+                                    "_": {"id": "00000001"},
+                                    "$": "USA"
+                                },
+                                {
+                                    "_": {"id": "37000001"},
+                                    "$": "Vermont"
+                                },
+                                {
+                                    "_": {"id": "37001161"},
+                                    "$": "Springfield"
+                                },
+                                {
+                                    "_": {"id": "00000001"},
+                                    "$": "USA"
+                                },
+                                {
+                                    "_": {"id": "21000001"},
+                                    "$": "New York"
+                                },
+                                {
+                                    "_": {"id": "21001001"},
+                                    "$": "New York"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "_": {"viewed": "false", "urgent": "false", "content": "UTF-32"},
+                    "id": {
+                        "$": "3"
+                    },
+                    "content": {
+                        "_": {"language": "fr"},
+                        "$": "texte international"
+                    },
+                    "sentAt": {
+                        "_": {"format": "UTC"},
+                        "$": "Thu Mar 24 00:21:57 +0005 2016"
+                    },
+                    "billing": {
+                        "_": {"international": "true"},
+                        "metrics": {
+                            "_": {"characterCount": "19", "byteCount": "401", "networkHops": "9", "rebroadcastCount": "7"}
+                        },
+                        "sourceNetwork": {
+                            "_": {"roaming": "true"},
+                            "$": "Verizon"
+                        },
+                        "taxRouting": {
+                            "jurisdiction": [
+                                {
+                                    "_": {"id": "00000002"},
+                                    "$": "Canada"
+                                },
+                                {
+                                    "_": {"id": "04000002"},
+                                    "$": "Ontario"
+                                },
+                                {
+                                    "_": {"id": "04001002"},
+                                    "$": "Toronto"
+                                },
+                                {
+                                    "_": {"id": "00000001"},
+                                    "$": "USA"
+                                },
+                                {
+                                    "_": {"id": "21000001"},
+                                    "$": "New York"
+                                },
+                                {
+                                    "_": {"id": "21001001"},
+                                    "$": "New York"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    </json>
+</envelope>
