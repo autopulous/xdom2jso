@@ -1,11 +1,14 @@
 {
   "name": "autopulous-xdom2jso",
-  "description": "Typescript module that converts a `XMLHttpRequest.responseXML` (XML DOM) object into a JavaScript object.",
-  "repository": "https://github.com/autopulous/xdom2jso.git",
+  "version": "0.0.1",
+  "description": "A module that converts a `XMLHttpRequest.responseXML` (XML DOM) object into a JavaScript object",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/autopulous/xdom2jso.git"
+  },
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "es6-shim": "^0.33.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.2.1",
@@ -50,6 +53,7 @@
     "npm (remove unused packages)": "npm prune",
     "npm (cache clear)": "npm cache clean",
     "npm (list cached packages)": "npm cache ls",
-    "npm (remove all packages)": "gulp delete-node-modules"
+    "npm (remove all packages)": "gulp delete-node-modules",
+    "npm (update npm version)": "npm install npm@latest -g"
   }
 }

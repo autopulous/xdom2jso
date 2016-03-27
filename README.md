@@ -1,7 +1,7 @@
 # XMLHttpRequest.responseXML to Javascript object
 
 ## Description
-`autopulous-xdom2jso` is a TypeScript module that converts a `XMLHttpRequest.responseXML` (XML DOM) object to a JavaScript object (JSO).
+`autopulous-xdom2jso` is a module that converts a `XMLHttpRequest.responseXML` (XML DOM) object to a JavaScript object (JSO).
 
 The typical use cases for this module is to convert the XML results of an HTTP GET into a JavaScript object to be processed (tabular data) or utilized (configuration parameters) by an application. 
 ## License
@@ -48,7 +48,7 @@ batch.invoice[1]={};
 batch.invoice[2]={};
 ```
 ---
-XML text nodes map to the `$` (dollars) property within the JavaScript object
+XML text nodes map to the `$` (dollar) property within the JavaScript object
 
 This XML fragment:
 ```
@@ -71,7 +71,9 @@ invoice._.number = '10000CX';
 invoice._.terms = '30 days';
 ```
 ---
-**Note:** _The distribution unit tests include a complete example of the full range of conversions that `xdom2jso` is capable of performing in the `complete.xml` used for project unit testing._  
+_The unit tests (which are part of the https://github.com/autopulous/xdom2jso.git GitHub repository) provide complete examples of the conversions that `xdom2jso` can perform._
+ 
+see: `tst/complete.xml`  
 ## Getting Started
 1. Create or open your `package.json` project file
 2. Add an `autopulous-xdom2json` entry to the dependencies list:

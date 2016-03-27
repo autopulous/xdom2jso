@@ -9,12 +9,12 @@ gulp.task('delete-node-modules', function () {
 });
 
 gulp.task('clean', function () {
-    var patterns = ['app/', 'tst/', 'map/', './*.log'];
+    var patterns = ['app/', 'tst/', 'map/', './*.log', 'distro/'];
     console.log('deleting: ' + patterns);
     return del(patterns);
 });
 
-gulp.task('build-app', function (gulpTaskCallback) {
+gulp.task('build-app', ['clean'], function () {
     var imagemin = require('gulp-imagemin');
     var postcss = require('gulp-postcss');
     var autoprefixer = require('autoprefixer');
@@ -41,17 +41,15 @@ gulp.task('build-app', function (gulpTaskCallback) {
     var typescriptCompiler = typescript({typescript: require('ntypescript')});
     var typescriptProject = typescript(typescript.createProject('tsconfig.json'));
 
-    gulp.src(['!src/**/spec.ts', 'src/**/*.ts'])
+    return gulp.src(['!src/**/spec.ts', 'src/**/*.ts'])
         .pipe(sourcemaps.init())
         .pipe(typescriptProject)
         .pipe(sourcemaps.write('../map/'))
         .pipe(gulp.dest('app/'))
         .pipe(typescriptCompiler);
-
-    gulpTaskCallback();
 });
 
-gulp.task('build-tst', function (gulpTaskCallback) {
+gulp.task('build-tst', function () {
     var sourcemaps = require('gulp-sourcemaps');
 
     var typescript = require('gulp-typescript');
@@ -65,22 +63,33 @@ gulp.task('build-tst', function (gulpTaskCallback) {
         .pipe(gulp.dest('app/'))
         .pipe(typescriptCompiler);
 
-    gulp.src('src/**/*.js')
+    return gulp.src('src/**/*.js')
         .pipe(gulp.dest('app/'));
+});
 
-    gulpTaskCallback();
+gulp.task('build-distro', function () {
+    gulp.src('src/package.json')
+        .pipe(gulp.dest('distro/'));
+
+    gulp.src('app/**/')
+        .pipe(gulp.dest('distro/'));
+
+    return gulp.src('README.md')
+        .pipe(gulp.dest('distro/'));
 });
 
 gulp.task('build', ['build-app', 'build-tst']);
 
-var runSequence = require('run-sequence');
-
-gulp.task('clean-build-app', function (gulpTaskCallback) {
-    runSequence('clean', 'build-app', gulpTaskCallback);
+gulp.task('clean-build-app', ['clean'], function () {
+    return gulp.start('build-app');
 });
 
-gulp.task('clean-build-tst', function (gulpTaskCallback) {
-    runSequence('clean-build-app', 'build-tst', gulpTaskCallback);
+gulp.task('clean-build-tst', ['clean-build-app'], function () {
+    return gulp.start('build-tst');
+});
+
+gulp.task('clean-build-distro', ['clean', 'build-app'], function () {
+    return gulp.start('build-distro');
 });
 
 gulp.task('default', ['clean-build-tst'], function () {
