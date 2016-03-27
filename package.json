@@ -1,7 +1,7 @@
 {
   "name": "autopulous-xdom2jso",
   "description": "Typescript module that converts a `XMLHttpRequest.responseXML` (XML DOM) object into a JavaScript object.",
-  "repository": "https://github.com/autopulous/xdom2jso",
+  "repository": "https://github.com/autopulous/xdom2jso.git",
   "license": "MIT",
   "private": false,
   "dependencies": {
