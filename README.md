@@ -84,6 +84,3 @@ see: `tst/complete.xml`
 ```
 npm install
 ```
-
-## To Do
-* Publish the module to `npm` (yes, I "lied" to you in the previous section - sorry)

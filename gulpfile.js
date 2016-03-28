@@ -5,12 +5,14 @@ var del = require('del');
 gulp.task('delete-node-modules', function () {
     var patterns = ['node_modules/'];
     console.log('deleting: ' + patterns);
+    console.log('Note: should this fail you might have one of the directories open in the terminal');
     return del(patterns);
 });
 
 gulp.task('clean', function () {
-    var patterns = ['app/', 'map/', './*.log', 'distro/'];
+    var patterns = ['app/', 'map/', 'distro/', './*.log'];
     console.log('deleting: ' + patterns);
+    console.log('Note: should this fail you might have one of the directories open in the terminal');
     return del(patterns);
 });
 
@@ -67,17 +69,6 @@ gulp.task('build-tst', function () {
         .pipe(gulp.dest('app/'));
 });
 
-gulp.task('build-distro', function () {
-    gulp.src('src/package.json')
-        .pipe(gulp.dest('distro/'));
-
-    gulp.src('app/**/')
-        .pipe(gulp.dest('distro/'));
-
-    return gulp.src('README.md')
-        .pipe(gulp.dest('distro/'));
-});
-
 gulp.task('build', ['build-app', 'build-tst']);
 
 gulp.task('clean-build-app', ['clean'], function () {
@@ -89,7 +80,14 @@ gulp.task('clean-build-tst', ['clean-build-app'], function () {
 });
 
 gulp.task('clean-build-distro', ['clean', 'build-app'], function () {
-    return gulp.start('build-distro');
+    gulp.src('src/package.json')
+        .pipe(gulp.dest('distro/'));
+
+    gulp.src('app/**/')
+        .pipe(gulp.dest('distro/'));
+
+    return gulp.src('README.md')
+        .pipe(gulp.dest('distro/'));
 });
 
 gulp.task('default', ['clean-build-tst'], function () {
