@@ -1,7 +1,7 @@
 {
   "name": "autopulous-xdom2jso",
-  "version": "0.0.2",
-  "description": "A module that converts a `XMLHttpRequest.responseXML` (XML DOM) object into a JavaScript object",
+  "version": "0.0.3",
+  "description": "A module that converts a XMLHttpRequest.responseXML (XML DOM) object into a JavaScript object",
   "repository": {
     "type": "git",
     "url": "https://github.com/autopulous/xdom2jso.git"
@@ -9,6 +9,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "autopulous-xdom": "^0.0.5"
   },
   "devDependencies": {
     "autoprefixer": "^6.2.1",
@@ -23,15 +24,16 @@
     "gulp-typescript": "^2.12.1",
     "http-server": "0.8.5",
     "jasmine-core": "2.4.1",
-    "karma": "0.13.19",
-    "karma-chrome-launcher": "0.2.2",
-    "karma-jasmine": "0.3.6",
+    "karma": "0.13.22",
+    "karma-chrome-launcher": "0.2.3",
+    "karma-jasmine": "0.3.8",
     "karma-spec-reporter": "^0.0.24",
     "lite-server": "^2.1.0",
     "ntypescript": "^1.201603060104.1",
     "postcss": "^5.0.13",
     "postcss-scss": "^0.1.3",
     "precss": "^1.3.0",
+    "run-sequence": "1.1.5",
     "systemjs": "0.19.17",
     "typescript": "1.7.5",
     "typings": "0.6.8"

@@ -1,96 +1,111 @@
 var gulp = require('gulp');
-
+var runSequence = require('run-sequence');
 var del = require('del');
 
 gulp.task('delete-node-modules', function () {
-    var patterns = ['node_modules/'];
+    var patterns = ['./node_modules/'];
+
     console.log('deleting: ' + patterns);
     console.log('Note: should this fail you might have one of the directories open in the terminal');
-    return del(patterns);
+
+    return del(patterns); // must return the del() result or intermittent and mysterious stream error may occur
 });
 
-gulp.task('clean', function () {
-    var patterns = ['app/', 'map/', 'distro/', './*.log'];
+gulp.task('CLEAN', function () {
+    var patterns = ['./app/', './map/', './distro/', './*.log'];
+
     console.log('deleting: ' + patterns);
     console.log('Note: should this fail you might have one of the directories open in the terminal');
-    return del(patterns);
+
+    return del(patterns); // must return the del() result or intermittent and mysterious stream error will occur
 });
 
-gulp.task('build-app', ['clean'], function () {
-    var imagemin = require('gulp-imagemin');
+gulp.task('copy-images', function () {
+    return gulp.src('./src/**/*.+(ico|gif|jpg|png)')
+        .pipe(gulp.dest('./app/'));
+});
+
+gulp.task('compile-css', function () {
+    var ext_replace = require('gulp-ext-replace');
     var postcss = require('gulp-postcss');
     var autoprefixer = require('autoprefixer');
     var precss = require('precss');
     var cssnano = require('cssnano');
-    var ext_replace = require('gulp-ext-replace');
     var sourcemaps = require('gulp-sourcemaps');
 
-    gulp.src('src/**/*.+(ico|gif|jpg|png)')
-        .pipe(imagemin({progressive: true}))
-        .pipe(gulp.dest('app/'));
-
-    gulp.src('src/**/*.scss')
+    return gulp.src('./src/**/*.scss')
         .pipe(sourcemaps.init())
         .pipe(postcss([precss, autoprefixer, cssnano]))
         .pipe(sourcemaps.write('../map/'))
         .pipe(ext_replace('.css'))
-        .pipe(gulp.dest('app/'));
+        .pipe(gulp.dest('./app/'));
+});
 
-    gulp.src('src/**/*.html')
-        .pipe(gulp.dest('app/'));
+gulp.task('copy-html', function () {
+    return gulp.src('./src/**/*.html')
+        .pipe(gulp.dest('./app/'));
+});
 
+gulp.task('copy-javascript', function () {
+    return gulp.src(['./src/**/*.js', '!./src/**/spec*.js'])
+        .pipe(gulp.dest('./app/'));
+});
+
+gulp.task('copy-test-javascript', function () {
+    return gulp.src('./src/**/spec*.js')
+        .pipe(gulp.dest('./app/'));
+});
+
+gulp.task('compile-typescript', function () {
     var typescript = require('gulp-typescript');
     var typescriptCompiler = typescript({typescript: require('ntypescript')});
     var typescriptProject = typescript(typescript.createProject('tsconfig.json'));
-
-    return gulp.src(['!src/**/spec.ts', 'src/**/*.ts'])
-        .pipe(sourcemaps.init())
-        .pipe(typescriptProject)
-        .pipe(sourcemaps.write('../map/'))
-        .pipe(gulp.dest('app/'))
-        .pipe(typescriptCompiler);
-});
-
-gulp.task('build-tst', function () {
     var sourcemaps = require('gulp-sourcemaps');
 
+    return gulp.src(['!./src/**/spec*.ts', './src/**/*.ts'])
+        .pipe(typescriptProject)
+        .pipe(sourcemaps.init())
+        .pipe(sourcemaps.write('../map/'))
+        .pipe(gulp.dest('./app/'))
+        .pipe(typescriptCompiler);
+});
+
+gulp.task('compile-test-typescript', function () {
+    var sourcemaps = require('gulp-sourcemaps');
     var typescript = require('gulp-typescript');
     var typescriptCompiler = typescript({typescript: require('ntypescript')});
     var typescriptProject = typescript(typescript.createProject('tsconfig.json'));
 
-    gulp.src('src/**/spec.ts')
-        .pipe(sourcemaps.init())
+    return gulp.src('./src/**/spec*.ts')
         .pipe(typescriptProject)
+        .pipe(sourcemaps.init())
         .pipe(sourcemaps.write('../map/'))
-        .pipe(gulp.dest('app/'))
+        .pipe(gulp.dest('./app/'))
         .pipe(typescriptCompiler);
-
-    return gulp.src('src/**/*.js')
-        .pipe(gulp.dest('app/'));
 });
 
-gulp.task('build', ['build-app', 'build-tst']);
-
-gulp.task('clean-build-app', ['clean'], function () {
-    return gulp.start('build-app');
+gulp.task('build-distribution', function () {
+    return gulp.src(['./src/package.json', './README.md', './app/**/*.js', './**/*.ts', '!./**/spec*.ts', '!./node_modules/', '!./node_modules/**', '!./typings/', '!./typings/**'])
+        .pipe(gulp.dest('distro'));
 });
 
-gulp.task('clean-build-tst', ['clean-build-app'], function () {
-    return gulp.start('build-tst');
+// Do not automatically perform a CLEAN when building the tests because Karma tends to gets stuck after files that it is monitoring are deleted
+
+gulp.task('BUILD-TESTS', function () {
+    runSequence('compile-typescript', ['copy-images', 'compile-css', 'copy-html', 'copy-javascript'], 'compile-test-typescript', 'copy-test-javascript');
 });
 
-gulp.task('clean-build-distro', ['clean', 'build-app'], function () {
-    gulp.src('src/package.json')
-        .pipe(gulp.dest('distro/'));
-
-    gulp.src('app/**/')
-        .pipe(gulp.dest('distro/'));
-
-    return gulp.src('README.md')
-        .pipe(gulp.dest('distro/'));
+gulp.task('BUILD-CLEAN-APPLICATION', function () {
+    runSequence('CLEAN', 'compile-typescript', ['copy-images', 'compile-css', 'copy-html', 'copy-javascript']);
 });
 
-gulp.task('default', ['clean-build-tst'], function () {
-    gulp.watch(['!src/**/spec.ts', 'src/**/*'], ['build-app']);
-    gulp.watch('src/**/spec.ts', ['build-tst']);
+gulp.task('BUILD-CLEAN-DISTRIBUTION', function () {
+    runSequence('CLEAN', 'compile-typescript', ['copy-images', 'compile-css', 'copy-html', 'copy-javascript'], 'build-distribution');
+});
+
+gulp.task('WATCH', ['CLEAN'], function () {
+    gulp.watch(['./src/**/*'], ['BUILD-TESTS']);
+});
+
+gulp.task('default', ['WATCH'], function () {
 });

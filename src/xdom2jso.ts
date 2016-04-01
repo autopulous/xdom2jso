@@ -1,6 +1,6 @@
-///<reference path="xml.ts"/>
+///<reference path="../node_modules/autopulous-xdom/src/xdom.ts"/>
 
-import nodeTypes = xml.nodeTypes;
+import nodeTypes = xdom.nodeTypes;
 
 module xdom2jso {
     export function convert(xmlRoot:Node):{} {
@@ -59,5 +59,3 @@ module xdom2jso {
         }
     }
 }
-
-// https://github.com/Microsoft/TypeScript-Handbook

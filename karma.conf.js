@@ -7,9 +7,9 @@ module.exports = function (config) {
         files: [
             'node_modules/systemjs/dist/system-polyfills.js',
             'node_modules/systemjs/dist/system.src.js',
-            'app/xml.js',
+            'node_modules/autopulous-xdom/xdom.js',
             'app/xdom2jso.js',
-            {pattern: 'app/**/spec.js', watched: true, included: true, served: true, nocache: true},
+            'app/**/spec.js',
             {pattern: 'tst/*.xml', watched: false, included: false, served: true, nocache: true}
         ],
 
