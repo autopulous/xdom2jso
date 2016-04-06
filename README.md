@@ -76,9 +76,9 @@ _The unit tests (which are part of the https://github.com/autopulous/xdom2jso.gi
 see: `tst/complete.xml`  
 ## Getting Started
 1. Create or open your `package.json` project file
-2. Add an `autopulous-xdom2json` entry to the dependencies list:
+2. Add an `autopulous-xdom2jso` entry to the dependencies list:
 ```
-"dependencies": {"autopulous-xdom2json": "latest"}
+"dependencies": {"autopulous-xdom2jso": "latest"}
 ```
 3. Use `npm` to install the component in the node module library home:
 ```
