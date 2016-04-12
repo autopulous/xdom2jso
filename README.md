@@ -14,9 +14,11 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## API
-`convert(xmlRoot:Node):{}`
+`convert(xmlRoot:Node, localName?:boolean):{}`
 
 - Accepts any ELEMENT node from an `XMLHttpRequest.responseXML` as the root from which to convert
+- Accepts a `localName?:boolean` argument that causes `ELEMENT` and `ATTRIBUTE` node name namespaces to be not be included in the JavaScript object
+
 - Returns a JavaScript object that represents the content of the passed XML ELEMENT node and its children
 
 - Only `ELEMENT`, `TEXT`, and `ATTRIBUTE` nodes are handled
@@ -24,7 +26,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 - Leading and trailing whitespace on `TEXT` node values is trimmed
 
 ## Node Conversion Rules
-XML elements become nodes within the JavaScript object
+__XML elements become nodes within the JavaScript object__
 
 This XML fragment:
 ```
@@ -35,7 +37,7 @@ is equivalent to this JavaScript:
 invoice.customer = {};
 ```
 ---
-XML multiple instances of an element become an array of nodes within the JavaScript object
+__XML multiple instances of an element become an array of nodes within the JavaScript object__
 
 This XML fragment:
 ```
@@ -48,7 +50,7 @@ batch.invoice[1]={};
 batch.invoice[2]={};
 ```
 ---
-XML text nodes map to the `$` (dollar) property within the JavaScript object
+__XML text nodes map to the `$` (dollar) property within the JavaScript object__
 
 This XML fragment:
 ```
@@ -59,7 +61,7 @@ is equivalent to this JavaScript:
 invoice.customer.$ = 'Brazillian Government';
 ```
 ---
-XML attribute nodes map into the `_` (underscore) property within the JavaScript object
+__XML attribute nodes map into the `_` (underscore) property within the JavaScript object__
 
 This XML fragment:
 ```
@@ -69,6 +71,36 @@ is equivalent to this JavaScript:
 ```
 invoice._.number = '10000CX';
 invoice._.terms = '30 days';
+```
+---
+__Namespace handling (preserve namespaces)__
+
+This XML fragment:
+```
+<ns83:ExecuteLoginResponse>
+    <ns82:UserLoginConfirmation>
+        <ns82:LoginResult>SUCCESS</ns82:LoginResult>
+    </ns82:UserLoginConfirmation>
+</ns83:ExecuteLoginResponse>
+```
+is equivalent to this JavaScript (where `localName` is `false`):
+```
+ns83:ExecuteLoginResponse.ns82:UserLoginConfirmation.ns82:LoginResult = 'SUCCESS';
+```
+---
+__Namespace handling (strip namespaces)__
+
+This XML fragment:
+```
+<ns83:ExecuteLoginResponse>
+    <ns82:UserLoginConfirmation>
+        <ns82:LoginResult>SUCCESS</ns82:LoginResult>
+    </ns82:UserLoginConfirmation>
+</ns83:ExecuteLoginResponse>
+```
+is equivalent to this JavaScript (where `localName` is `true`):
+```
+ExecuteLoginResponse.UserLoginConfirmation.LoginResult = 'SUCCESS';
 ```
 ---
 _The unit tests (which are part of the https://github.com/autopulous/xdom2jso.git GitHub repository) provide complete examples of the conversions that `xdom2jso` can perform._
