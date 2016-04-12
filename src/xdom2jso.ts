@@ -3,15 +3,19 @@
 import nodeTypes = xdom.nodeTypes;
 
 module xdom2jso {
-    export function convert(xmlRoot:Node):{} {
+    export function convert(xmlRoot:Node, localName?:boolean):{} {
+        if (undefined !== localName) this.localName = localName;
+
         var jsoRoot:{} = {};
         convertNodes(jsoRoot, xmlRoot);
         return jsoRoot;
     }
 
+    var localName:boolean = false;
+
     function convertNodes(jso:any, node:Node) {
         var nodeType:number = node.nodeType;
-        var nodeName:string = node.nodeName;
+        var nodeName:string = this.localName ? node.localName : node.nodeName;
 
         if (nodeTypes.ELEMENT === nodeType) {
             var jsoNode:{} = {};
@@ -24,7 +28,7 @@ module xdom2jso {
 
                 for (var attributeIndex:number = 0; attributeNodes.length > attributeIndex; ++attributeIndex) {
                     var attribute:Attr = attributeNodes.item(attributeIndex);
-                    attributes[attribute.name] = attribute.value;
+                    attributes[this.localName ? attribute.localName : attribute.nodeName] = attribute.value;
                 }
 
                 jsoNode['_'] = attributes;

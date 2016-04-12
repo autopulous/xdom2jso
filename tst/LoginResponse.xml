@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Header/>
+    <SOAP-ENV:Body>
+        <ns83:ExecuteLoginResponse xmlns:ns82="urn:vertexinc:enterprise:platform:security:1:0" xmlns:ns83="urn:vertexinc:enterprise:platform:security:messages:1:0">
+            <ns82:UserLoginConfirmation>
+                <ns82:UserName>john.hart@vertexinc.com</ns82:UserName>
+                <ns82:LoginResult>SUCCESS</ns82:LoginResult>
+                <ns82:LastLoginDate>2016-02-01T10:51:11.688</ns82:LastLoginDate>
+                <ns82:DefaultAsOfDate>2016-02-01</ns82:DefaultAsOfDate>
+                <ns82:ForcePasswordChange>false</ns82:ForcePasswordChange>
+            </ns82:UserLoginConfirmation>
+        </ns83:ExecuteLoginResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

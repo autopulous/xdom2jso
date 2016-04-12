@@ -55,6 +55,105 @@ describe('XML DOM object to JavaScript object conversion unit tests', () => {
         })
     });
 
+    describe('XML document conversion with namespaces', () => {
+        beforeAll(() => {
+            url = "base/tst/LoginResponse.xml";
+            jso = null;
+
+            xmlHttpRequest.onreadystatechange = () => {
+                if (4 == xmlHttpRequest.readyState) {
+                    jso = convert(xmlHttpRequest.responseXML.documentElement);
+                    console.log(JSON.stringify(jso));
+                }
+            };
+            xmlHttpRequest.open("GET", url, false); // must be synchonous
+            xmlHttpRequest.send(null);
+        });
+
+        it('should have returned a JavaScript object (jso)', () => {
+            expect(jso).not.toBe(null);
+
+            var visited:{}[] = [];
+            var stack:{}[] = [{obj: jso, stack: ''}];
+
+            while (0 < stack.length) {
+                var item:any = stack.pop();
+                var obj:{} = item.obj;
+
+                for (var property in obj) {
+                    if (obj.hasOwnProperty(property)) {
+                        if ("object" === typeof obj[property]) {
+                            var alreadyFound:boolean = false;
+                            for (var i:number = 0; i < visited.length; i++) {
+                                if (visited[i] === obj[property]) {
+                                    alreadyFound = true;
+                                    break;
+                                }
+                            }
+                            if (!alreadyFound) {
+                                if ("_" != property) {
+                                    expect(property.indexOf(':')).not.toEqual(-1); // tests for the presence of a namespace on the element name
+                                }
+
+                                visited.push(obj[property]);
+                                stack.push({obj: obj[property], stack: item.stack + '.' + property});
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    describe('XML document conversion without namespaces', () => {
+        beforeAll(() => {
+            url = "base/tst/LoginResponse.xml";
+            jso = null;
+
+            xmlHttpRequest.onreadystatechange = () => {
+                if (4 == xmlHttpRequest.readyState) {
+                    jso = convert(xmlHttpRequest.responseXML.documentElement, true);
+                    console.log(JSON.stringify(jso));
+                }
+            };
+            xmlHttpRequest.open("GET", url, false); // must be synchonous
+            xmlHttpRequest.send(null);
+        });
+
+        it('should have returned a JavaScript object (jso)', () => {
+            expect(jso).not.toBe(null);
+            var visited:{}[] = [];
+            var stack:{}[] = [{obj: jso, stack: ''}];
+
+            while (0 < stack.length) {
+                var item:any = stack.pop();
+                var obj:{} = item.obj;
+
+                for (var property in obj) {
+                    if (obj.hasOwnProperty(property)) {
+                        if ("object" === typeof obj[property]) {
+                            var alreadyFound:boolean = false;
+                            for (var i:number = 0; i < visited.length; i++) {
+                                if (visited[i] === obj[property]) {
+                                    alreadyFound = true;
+                                    break;
+                                }
+                            }
+                            if (!alreadyFound) {
+                                if ("_" != property) {
+                                    expect(property.indexOf(':')).toEqual(-1); // tests for the lack of a namespace on the element name
+                                }
+
+                                visited.push(obj[property]);
+                                stack.push({obj: obj[property], stack: item.stack + '.' + property});
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+
     describe('Multiplicity element XML conversion', () => {
         beforeAll(() => {
             url = "base/tst/multiple.xml";
