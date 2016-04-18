@@ -1,4 +1,4 @@
-///<reference path="../node_modules/autopulous-xdom/xdom.ts"/>
+///<reference path="../../node_modules/autopulous-xdom/xdom.ts"/>
 
 import nodeTypes = xdom.nodeTypes;
 

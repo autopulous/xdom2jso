@@ -1,6 +1,6 @@
 {
   "name": "autopulous-xdom2jso",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A module that converts a XMLHttpRequest.responseXML (XML DOM) object into a JavaScript object",
   "repository": {
     "type": "git",
