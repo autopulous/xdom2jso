@@ -78,7 +78,7 @@ describe('XML DOM object to JavaScript object conversion unit tests', () => {
 
             while (0 < stack.length) {
                 var item:any = stack.pop();
-                var obj:{} = item.obj;
+                var obj:any = item.obj;
 
                 for (var property in obj) {
                     if (obj.hasOwnProperty(property)) {
@@ -127,7 +127,7 @@ describe('XML DOM object to JavaScript object conversion unit tests', () => {
 
             while (0 < stack.length) {
                 var item:any = stack.pop();
-                var obj:{} = item.obj;
+                var obj:any = item.obj;
 
                 for (var property in obj) {
                     if (obj.hasOwnProperty(property)) {

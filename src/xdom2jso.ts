@@ -1,4 +1,4 @@
-///<reference path="../node_modules/autopulous-xdom/src/xdom.ts"/>
+///<reference path="../node_modules/autopulous-xdom/xdom.ts"/>
 
 import nodeTypes = xdom.nodeTypes;
 
@@ -18,13 +18,13 @@ module xdom2jso {
         var nodeName:string = this.localName ? node.localName : node.nodeName;
 
         if (nodeTypes.ELEMENT === nodeType) {
-            var jsoNode:{} = {};
+            var jsoNode:any = {};
 
             var attributeNodes:NamedNodeMap = node.attributes;
             var attributeIndex:number = attributeNodes.length;
 
             if (0 < attributeIndex) {
-                var attributes:{} = {};
+                var attributes:any = {};
 
                 for (var attributeIndex:number = 0; attributeNodes.length > attributeIndex; ++attributeIndex) {
                     var attribute:Attr = attributeNodes.item(attributeIndex);
